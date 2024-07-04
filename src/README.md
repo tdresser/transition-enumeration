@@ -1,3 +1,14 @@
+## Setup
+```
+pnpm install
+pnpm run dev
+```
+
+## Pre-Upload
+```
+pnpm build
+```
+
 ## Purpose
 This exists to enable easy experimentation and enumeration of types of navigation transitions which may or may not be appropriate for cross-origin or cross-site transitions.
 

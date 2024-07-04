@@ -8,6 +8,8 @@ interface ExampleProps {
     state: ExampleState;
     startPage: VNode<any>;
     endPage: VNode<any>;
+    // This is required for `pnpm build`, but not `pnpm run dev`. Not sure why.
+    children?: never[];
     setupOutgoingVT?: (query: Query) => void;
     setupIncomingVT?: (query: Query) => void;
     vtStyle?: string;
