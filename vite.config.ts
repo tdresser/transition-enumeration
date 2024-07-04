@@ -7,5 +7,5 @@ export default defineConfig({
   build: {
     outDir: "docs"
   },
-  base: "/transition-enumeration"
+  base: "/transition-enumeration/"
 })
