@@ -1,0 +1,49 @@
+html,
+body {
+  width: 100%;
+}
+
+.container {
+  width: calc(2em * 9);
+  height: calc(2em * 16);
+  background-color: white;
+  margin: auto;
+  overflow: clip;
+  margin-bottom: 2em;
+}
+
+.header {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.content {
+  margin: 1em;
+}
+
+html {
+  padding: 2em;
+}
+
+.preview {
+  height: 4em;
+  width: 7em;
+  object-fit: cover;
+  display: block;
+}
+
+.aggregatorRow {
+  display: flex;
+  align-items: center;
+}
+
+.aggregatorRow p {
+  margin-left: 0.5em;
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
+}
