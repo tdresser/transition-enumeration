@@ -8,8 +8,6 @@ declare global {
     }
 }
 
-export type Query = (s: string) => HTMLElement;
-
 // Scoped query generator, intended to make assigning things view-transition-names as easy as possible.
 export function generateScopedQuery(container: HTMLElement) {
     return (query: string): HTMLElement => {

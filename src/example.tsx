@@ -1,7 +1,9 @@
 import { VNode } from "preact";
 import { ExampleState } from "./example_state";
 import { StateUpdater, useEffect, useMemo, useRef, useState } from "preact/hooks";
-import { Query, fail, generateScopedQuery } from "./util";
+import { fail, generateScopedQuery } from "./util";
+
+type SelectorToVTNameMap = { [x: string]: string; }
 
 interface ExampleProps {
     title: string,
@@ -10,28 +12,47 @@ interface ExampleProps {
     endPage: VNode<any>;
     // This is required for `pnpm build`, but not `pnpm run dev`. Not sure why.
     children?: never[];
-    setupStartPageForVT?: (query: Query) => void;
-    setupEndPageForVT?: (query: Query) => void;
+    startPageSelectorToVTNameMap?: SelectorToVTNameMap;
+    endPageSelectorToVTNameMap?: SelectorToVTNameMap;
     vtStyle?: string;
     vtReverseStyle?: string;
 }
 
 interface doVTParams {
     container: HTMLElement,
-    setupOutgoingVT?: (query: Query) => void,
-    setupIncomingVT?: (query: Query) => void;
+    outgoingPageSelectorToVTNameMap?: SelectorToVTNameMap;
+    incomingPageSelectorToVTNameMap?: SelectorToVTNameMap;
     vtStyle?: string;
     destination: VNode<any>;
     setCurrentPage: (value: StateUpdater<VNode<any>>) => void
 }
 
+function applySelectorToVTNameMap(container: HTMLElement, map?: SelectorToVTNameMap) {
+    if (!map) {
+        return;
+    }
+    const query = generateScopedQuery(container);
+    Object.entries(map).forEach(([selector, vtName]) => {
+        const el = query(selector);
+        el.style.viewTransitionName = vtName;
+    })
+}
+
+function clearVTNames(container: HTMLElement, map?: SelectorToVTNameMap) {
+    if (!map) {
+        return;
+    }
+    const query = generateScopedQuery(container);
+    Object.entries(map).forEach(([selector, _]) => {
+        const el = query(selector);
+        el.style.viewTransitionName = "";
+    })
+}
+
 function doVT(params: doVTParams) {
-    const query = generateScopedQuery(params.container);
     // setTimeouts are a hack because we can't synchronously flush all DOM modifications.
     setTimeout(() => {
-        console.log("Setup outgoing")
-        console.log(params.container.innerHTML);
-        params.setupOutgoingVT && params?.setupOutgoingVT(query);
+        applySelectorToVTNameMap(params.container, params.outgoingPageSelectorToVTNameMap);
         params.container.style.viewTransitionName = "active-container";
         const styleSheet = document.getElementById("vtstyle") ?? fail();
         styleSheet.innerText = params.vtStyle ?? "";
@@ -42,9 +63,12 @@ function doVT(params: doVTParams) {
                 window.setTimeout(() => {
                     console.log("Setup incoming")
                     console.log(params.container.innerHTML);
-                    params.setupIncomingVT && params.setupIncomingVT(query);
+                    applySelectorToVTNameMap(params.container, params.incomingPageSelectorToVTNameMap);
                     resolve();
                     params.container.style.viewTransitionName = "";
+                    window.setTimeout(() => {
+                        clearVTNames(params.container, params.incomingPageSelectorToVTNameMap)
+                    }, 0);
                 }, 0);
             });
         })
@@ -65,8 +89,8 @@ export function Example(props: ExampleProps) {
                 console.log("Forwards");
                 doVT({
                     container: container.current ?? fail(),
-                    setupOutgoingVT: props.setupStartPageForVT,
-                    setupIncomingVT: props.setupEndPageForVT,
+                    outgoingPageSelectorToVTNameMap: props.startPageSelectorToVTNameMap,
+                    incomingPageSelectorToVTNameMap: props.endPageSelectorToVTNameMap,
                     vtStyle: props.vtStyle,
                     destination: props.endPage,
                     setCurrentPage
@@ -76,8 +100,8 @@ export function Example(props: ExampleProps) {
                 doVT({
                     container: container.current ?? fail(),
                     // Swap the order
-                    setupOutgoingVT: props.setupEndPageForVT,
-                    setupIncomingVT: props.setupStartPageForVT,
+                    outgoingPageSelectorToVTNameMap: props.endPageSelectorToVTNameMap,
+                    incomingPageSelectorToVTNameMap: props.startPageSelectorToVTNameMap,
                     vtStyle: props.vtReverseStyle ? props.vtReverseStyle : props.vtStyle,
                     destination: props.startPage,
                     setCurrentPage
