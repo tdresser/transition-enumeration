@@ -1,6 +1,6 @@
 import { VNode } from "preact";
 import { ExampleState } from "./example_state";
-import { StateUpdater, useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { StateUpdater, useMemo, useRef, useState } from "preact/hooks";
 import { fail, generateScopedQuery } from "./util";
 
 type SelectorToVTNameMap = { [x: string]: string; }
