@@ -6,7 +6,7 @@ import { fail, generateScopedQuery } from "./util";
 type SelectorToVTNameMap = { [x: string]: string; }
 
 interface ExampleProps {
-    title: string,
+    title?: string,
     state: ExampleState;
     startPage: VNode<any>;
     endPage: VNode<any>;
@@ -104,7 +104,7 @@ export function Example(props: ExampleProps) {
 
     return (
         <>
-            <h1>{props.title}</h1>
+            {props.title ? <><h1>{props.title}</h1></> : <></>}
             <div ref={container} class="container">
                 {currentPage}
             </div>
