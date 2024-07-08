@@ -2,11 +2,9 @@ export class ExampleState {
     listeners: ((x: ExampleState) => void)[] = [];
     activated: boolean = false;
     linkIndex?: number;
-    initialLinkIndex?: number;
 
     constructor(index?: number) {
         this.linkIndex = index;
-        this.initialLinkIndex = index;
     }
 
     activate(index?: number) {
@@ -25,7 +23,6 @@ export class ExampleState {
 
     reset() {
         this.activated = false;
-        this.linkIndex = this.initialLinkIndex;
         for (const listener of this.listeners) {
             listener(this);
         }

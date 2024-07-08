@@ -9,10 +9,10 @@ export function AggregatorImageToWholePage() {
     const example2State = new ExampleState(3);
     return <>
         <Example title="Aggregator Image Expands to Whole Page"
-            setupIncomingVT={(q: Query) => {
+            setupStartPageForVT={(q: Query) => {
                 q("img.preview.active").style.viewTransitionName = "header_whole_expand";
             }}
-            setupOutgoingVT={(q: Query) => {
+            setupEndPageForVT={(q: Query) => {
                 q(".page").style.viewTransitionName = "header_whole_expand";
             }}
             state={example1State}
@@ -25,10 +25,10 @@ export function AggregatorImageToWholePage() {
         </Example >
 
         <Example title="Whole Page Shrinks to Aggregator Image"
-            setupIncomingVT={(q: Query) => {
+            setupEndPageForVT={(q: Query) => {
                 q(".page").style.viewTransitionName = "header_whole_shrink";
             }}
-            setupOutgoingVT={(q: Query) => {
+            setupStartPageForVT={(q: Query) => {
                 q("img.preview.active").style.viewTransitionName = "header_whole_shrink";
             }}
             state={example2State}

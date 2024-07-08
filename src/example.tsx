@@ -1,6 +1,6 @@
 import { VNode } from "preact";
 import { ExampleState } from "./example_state";
-import { useMemo, useRef, useState } from "preact/hooks";
+import { StateUpdater, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { Query, fail, generateScopedQuery } from "./util";
 
 interface ExampleProps {
@@ -10,41 +10,78 @@ interface ExampleProps {
     endPage: VNode<any>;
     // This is required for `pnpm build`, but not `pnpm run dev`. Not sure why.
     children?: never[];
-    setupOutgoingVT?: (query: Query) => void;
+    setupStartPageForVT?: (query: Query) => void;
+    setupEndPageForVT?: (query: Query) => void;
+    vtStyle?: string;
+    vtReverseStyle?: string;
+}
+
+interface doVTParams {
+    container: HTMLElement,
+    setupOutgoingVT?: (query: Query) => void,
     setupIncomingVT?: (query: Query) => void;
     vtStyle?: string;
+    destination: VNode<any>;
+    setCurrentPage: (value: StateUpdater<VNode<any>>) => void
+}
+
+function doVT(params: doVTParams) {
+    const query = generateScopedQuery(params.container);
+    // setTimeouts are a hack because we can't synchronously flush all DOM modifications.
+    setTimeout(() => {
+        console.log("Setup outgoing")
+        console.log(params.container.innerHTML);
+        params.setupOutgoingVT && params?.setupOutgoingVT(query);
+        params.container.style.viewTransitionName = "active-container";
+        const styleSheet = document.getElementById("vtstyle") ?? fail();
+        styleSheet.innerText = params.vtStyle ?? "";
+        // @ts-ignore
+        document.startViewTransition(() => {
+            params.setCurrentPage(params.destination);
+            return new Promise<void>((resolve, _) => {
+                window.setTimeout(() => {
+                    console.log("Setup incoming")
+                    console.log(params.container.innerHTML);
+                    params.setupIncomingVT && params.setupIncomingVT(query);
+                    resolve();
+                    params.container.style.viewTransitionName = "";
+                }, 0);
+            });
+        })
+    }, 0)
 }
 
 export function Example(props: ExampleProps) {
     const container = useRef<HTMLDivElement>(null);
     const [currentPage, setCurrentPage] = useState(props.startPage);
 
+    useEffect(() => {
+        console.log("Current page changed to " + (currentPage == props.startPage ? "start" : "end"))
+    }, [currentPage])
+
     useMemo(() => {
         props.state.listenToActivation((state) => {
-            if (!state.activated) {
-                setCurrentPage(props.startPage);
+            if (state.activated) {
+                console.log("Forwards");
+                doVT({
+                    container: container.current ?? fail(),
+                    setupOutgoingVT: props.setupStartPageForVT,
+                    setupIncomingVT: props.setupEndPageForVT,
+                    vtStyle: props.vtStyle,
+                    destination: props.endPage,
+                    setCurrentPage
+                });
             } else {
-                const query = generateScopedQuery(container.current ?? fail());
-                // setTimeouts are a hack because we can't synchronously flush all DOM modifications.
-                setTimeout(() => {
-                    props.setupIncomingVT && props?.setupIncomingVT(query);
-                    (container.current ?? fail()).style.viewTransitionName = "active-container";
-                    const styleSheet = document.getElementById("vtstyle") ?? fail();
-                    styleSheet.innerText = props.vtStyle ?? "";
-                    // @ts-ignore
-                    document.startViewTransition(() => {
-                        setCurrentPage(props.endPage);
-                        return new Promise<void>((resolve, _) => {
-                            window.setTimeout(() => {
-                                console.log("Is this the outgoing page? ");
-                                console.log(container.current);
-                                props.setupOutgoingVT && props.setupOutgoingVT(query);
-                                resolve();
-                                (container.current ?? fail()).style.viewTransitionName = "";
-                            }, 0);
-                        });
-                    })
-                }, 0)
+                console.log("Reverse");
+                doVT({
+                    container: container.current ?? fail(),
+                    // Swap the order
+                    setupOutgoingVT: props.setupEndPageForVT,
+                    setupIncomingVT: props.setupStartPageForVT,
+                    vtStyle: props.vtReverseStyle ? props.vtReverseStyle : props.vtStyle,
+                    destination: props.startPage,
+                    setCurrentPage
+                });
             }
         })
     }, [])
