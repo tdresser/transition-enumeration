@@ -63,9 +63,9 @@ function doVT(params: doVTParams) {
                 window.setTimeout(() => {
                     applySelectorToVTNameMap(params.container, params.incomingPageSelectorToVTNameMap);
                     resolve();
-                    params.container.style.viewTransitionName = "";
                     window.setTimeout(() => {
-                        clearVTNames(params.container, params.incomingPageSelectorToVTNameMap)
+                        clearVTNames(params.container, params.incomingPageSelectorToVTNameMap);
+                        params.container.style.viewTransitionName = "";
                     }, 0);
                 }, 0);
             });

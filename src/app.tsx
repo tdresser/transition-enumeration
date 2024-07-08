@@ -11,6 +11,7 @@ import SharedAxisZoomCSS from './examples/styles/shared_axis_zoom_in.css?inline'
 import SharedAxisZoomOutCSS from './examples/styles/shared_axis_zoom_out.css?inline';
 
 import { AggregatorImageToWholePage } from './examples/aggregator_image_to_whole_page'
+import { IframeExpands } from './examples/iframe_expands'
 
 export function App() {
   // TODO: managing these state objects is annoying. Is there a better way?
@@ -59,6 +60,8 @@ export function App() {
           <Aggregator state={example3State}></Aggregator>
         }>
       </Example>
+
+      <IframeExpands></IframeExpands>
     </>
   )
 }
