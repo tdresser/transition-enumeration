@@ -61,8 +61,6 @@ function doVT(params: doVTParams) {
             params.setCurrentPage(params.destination);
             return new Promise<void>((resolve, _) => {
                 window.setTimeout(() => {
-                    console.log("Setup incoming")
-                    console.log(params.container.innerHTML);
                     applySelectorToVTNameMap(params.container, params.incomingPageSelectorToVTNameMap);
                     resolve();
                     params.container.style.viewTransitionName = "";
@@ -79,14 +77,9 @@ export function Example(props: ExampleProps) {
     const container = useRef<HTMLDivElement>(null);
     const [currentPage, setCurrentPage] = useState(props.startPage);
 
-    useEffect(() => {
-        console.log("Current page changed to " + (currentPage == props.startPage ? "start" : "end"))
-    }, [currentPage])
-
     useMemo(() => {
         props.state.listenToActivation((state) => {
             if (state.activated) {
-                console.log("Forwards");
                 doVT({
                     container: container.current ?? fail(),
                     outgoingPageSelectorToVTNameMap: props.startPageSelectorToVTNameMap,
@@ -96,7 +89,6 @@ export function Example(props: ExampleProps) {
                     setCurrentPage
                 });
             } else {
-                console.log("Reverse");
                 doVT({
                     container: container.current ?? fail(),
                     // Swap the order
