@@ -11,7 +11,7 @@ export function IframeExpandsFull() {
             state={state}
             startPage={
                 <div style={{
-                    width:"100%", height: "100%", transformOrigin:"top left"
+                    width: "100%", height: "100%", transformOrigin: "top left"
                 }} onClick={
                     () => {
                         console.log("CLICK");
@@ -24,9 +24,9 @@ export function IframeExpandsFull() {
                 </div>
             }
             endPage={
-                <div style={{width:"100%", height: "100%"}}>
+                <div style={{ width: "100%", height: "100%" }}>
                     <iframe src="https://xkcd.com/2955" style={{
-                        width:"100%", height: "100%"
+                        width: "100%", height: "100%"
                     }}></iframe>
                 </div>
             }>

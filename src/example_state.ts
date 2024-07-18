@@ -2,6 +2,7 @@ export class ExampleState {
     listeners: ((x: ExampleState) => void)[] = [];
     activated: boolean = false;
     linkIndex?: number;
+    document: Document | undefined;
 
     constructor(index?: number) {
         this.linkIndex = index;

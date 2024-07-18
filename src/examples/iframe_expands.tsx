@@ -6,7 +6,7 @@ export function IframeExpands() {
     const state = new ExampleState();
 
     return <>
-        <Example title="iFrame Expands to MPA nav (WIP)"
+        <Example
             vtStyle={IframeExpandsCss}
             state={state}
             startPage={
@@ -14,7 +14,7 @@ export function IframeExpands() {
                 // But then the default animation starts scaling things weirdly. Scale this consistently
                 // to avoid weird artifacts.
                 <div style={{
-                    width:"220%", height: "220%", transform: "scale(0.4)", transformOrigin:"top left"
+                    width: "220%", height: "220%", transform: "scale(0.4)", transformOrigin: "top left"
                 }} onClick={
                     () => {
                         console.log("CLICK");
@@ -24,9 +24,9 @@ export function IframeExpands() {
                 </div>
             }
             endPage={
-                <div style={{width:"100%", height: "100%"}}>
+                <div style={{ width: "100%", height: "100%" }}>
                     <iframe src="https://xkcd.com/2955" style={{
-                        width:"900px", height: "220%", transform: "scale(0.4)", transformOrigin:"top left"
+                        width: "900px", height: "220%", transform: "scale(0.4)", transformOrigin: "top left"
                     }}></iframe>
                 </div>
             }>
