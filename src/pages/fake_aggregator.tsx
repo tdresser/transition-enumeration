@@ -2,12 +2,12 @@ import { useCallback, useMemo, useState } from 'preact/hooks';
 import { HEADER_IMAGES } from './header_images';
 import { ExampleState } from '../example_state';
 
-interface AggregatorProps {
+interface FakeAggregatorProps {
     state: ExampleState
     firstPage?: boolean
 }
 
-export function Aggregator(props: AggregatorProps) {
+export function FakeAggregator(props: FakeAggregatorProps) {
     // This is a bit redundant with the state prop, but we need this to trigger rerenders.
     let [linkIndex, setLinkIndex] = useState(props.state.linkIndex);
 
@@ -39,7 +39,8 @@ export function Aggregator(props: AggregatorProps) {
     return (
         <>
             <div class="page" data-theme="light">
-                <h3 style={{ paddingTop: "0.5em" }}>TODO</h3>
+                <h3 style={{ paddingTop: "0.5em" }}>Bug Stuff Aggregator</h3>
+                {imageElements}
             </div>
         </>
     )

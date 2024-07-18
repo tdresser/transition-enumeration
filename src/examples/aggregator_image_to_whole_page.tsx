@@ -1,7 +1,7 @@
 import { Example } from "../example";
 import { ExampleState } from "../example_state";
 import { IFramer } from "../iframer";
-import { Aggregator } from "../pages/aggregator";
+import { FakeAggregator } from "../pages/fake_aggregator";
 import { Detail } from "../pages/detail";
 
 export function AggregatorImageToWholePage() {
@@ -17,7 +17,7 @@ export function AggregatorImageToWholePage() {
                 }}
                 state={example1State}
                 startPage={
-                    <Aggregator firstPage state={example1State}></Aggregator>
+                    <FakeAggregator firstPage state={example1State}></FakeAggregator>
                 }
                 endPage={
                     <Detail state={example1State}></Detail>
