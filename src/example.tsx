@@ -6,6 +6,7 @@ import { fail, generateScopedQuery } from "./util";
 type SelectorToVTNameMap = { [x: string]: string };
 
 interface ExampleProps {
+  height?: string;
   state: ExampleState;
   startPage: VNode<any>;
   endPage: VNode<any>;
@@ -118,7 +119,7 @@ export function Example(props: ExampleProps) {
 
   return (
     <>
-      <div ref={container} class="container">
+      <div ref={container} style={props.height ? { height: props.height } : {}} class="container">
         {currentPage}
       </div>
     </>

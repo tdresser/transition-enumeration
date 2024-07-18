@@ -1,23 +1,24 @@
 import { Example } from "../example";
 import { ExampleState } from "../example_state";
 import { IFramer } from "../iframer";
-import { FakeAggregator } from "../pages/fake_aggregator";
+import { Aggregator } from "../pages/aggregator";
 import { Detail } from "../pages/detail";
 
 export function AggregatorImageToWholePage() {
     const example1State = new ExampleState();
+
     return <>
-        <IFramer state={example1State}>
-            <Example
+        <IFramer height="800px" state={example1State}>
+            <Example height="800px"
                 startPageSelectorToVTNameMap={{
-                    "img.preview.active": "header_whole_expand"
+                    ".link_overlay.active div.link_overlay_inner": "header_whole_expand"
                 }}
                 endPageSelectorToVTNameMap={{
                     ".page": "header_whole_expand"
                 }}
                 state={example1State}
                 startPage={
-                    <FakeAggregator firstPage state={example1State}></FakeAggregator>
+                    <Aggregator firstPage state={example1State}></Aggregator>
                 }
                 endPage={
                     <Detail state={example1State}></Detail>

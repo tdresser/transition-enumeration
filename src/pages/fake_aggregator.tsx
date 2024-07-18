@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'preact/hooks';
-import { HEADER_IMAGES } from './header_images';
+import { FAKE_HEADER_IMAGES } from './fake_header_images';
 import { ExampleState } from '../example_state';
 
 interface FakeAggregatorProps {
@@ -12,7 +12,7 @@ export function FakeAggregator(props: FakeAggregatorProps) {
     let [linkIndex, setLinkIndex] = useState(props.state.linkIndex);
 
     // Just doubling the length.
-    const images = useMemo(() => HEADER_IMAGES.concat(HEADER_IMAGES), []);
+    const images = useMemo(() => FAKE_HEADER_IMAGES.concat(FAKE_HEADER_IMAGES), []);
 
     const onClick = useCallback((index: number) => {
         return () => {

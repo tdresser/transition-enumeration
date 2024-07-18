@@ -1,19 +1,19 @@
 import { ExampleState } from '../example_state';
-import { REAL_PAGES } from './header_images';
+import { FAKE_HEADER_IMAGES } from './fake_header_images';
 import { useCallback, useMemo } from 'preact/hooks';
 
-interface DetailProps {
+interface FakeDetailProps {
     state: ExampleState
     firstPage?: boolean
 }
 
-export function Detail(props: DetailProps) {
+export function FakeDetail(props: FakeDetailProps) {
     const image = useMemo(() => {
         const index = props.state.linkIndex;
         if (index == null) {
             return;
         }
-        return REAL_PAGES[index % REAL_PAGES.length]
+        return FAKE_HEADER_IMAGES[index % FAKE_HEADER_IMAGES.length]
     }, [props.state.linkIndex])
 
     const onClick = useCallback(() => {
@@ -27,8 +27,8 @@ export function Detail(props: DetailProps) {
     return (
         <>
             <div class="page" onClick={onClick}>
-                <img class="header" src={image} style={{ width: "100%", height: "100%" }} />
-            </div>
+                <img class="header" src={image} />
+            </div >
         </>
     )
 }

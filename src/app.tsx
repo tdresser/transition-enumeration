@@ -2,19 +2,19 @@ import "@picocss/pico/css/pico.classless.css";
 import "./per_page.css";
 import "./main.css";
 
-import { Detail } from "./pages/detail";
+import { FakeDetail } from "./pages/fake_detail";
 import { FakeAggregator } from "./pages/fake_aggregator";
 import { Example } from "./example";
 import { ExampleState } from "./example_state";
-import { AggregatorPreservesHeader } from "./examples/aggregator_preserves_header";
+import { FakeAggregatorPreservesHeader } from "./examples/fake_aggregator_preserves_header";
 
 import SharedAxisCSS from "./examples/styles/shared_axis.css?inline";
 import SharedAxisZoomCSS from "./examples/styles/shared_axis_zoom_in.css?inline";
 import SharedAxisZoomOutCSS from "./examples/styles/shared_axis_zoom_out.css?inline";
 
-import { AggregatorImageToWholePage } from "./examples/aggregator_image_to_whole_page";
+import { FakeAggregatorImageToWholePage } from "./examples/fake_aggregator_image_to_whole_page";
 import { IFramer } from "./iframer";
-import { Aggregator } from "./pages/aggregator";
+import { AggregatorImageToWholePage } from "./examples/aggregator_image_to_whole_page";
 
 export function App() {
   // TODO: managing these state objects is annoying. Is there a better way?
@@ -24,20 +24,16 @@ export function App() {
 
   return (
     <>
-      <h1>WIP</h1>
-      <IFramer state={example3State}>
-        <Example
-          state={example3State}
-          startPage={<Aggregator state={example3State}></Aggregator>}
-          endPage={<Aggregator state={example3State}></Aggregator>}
-        ></Example>
-      </IFramer>
+      <h1>Container Transform</h1>
+      <p>Click one of the three rows with images.</p>
+      <AggregatorImageToWholePage></AggregatorImageToWholePage>
+
 
       <h1>Aggregator Image Expands to Header</h1>
-      <AggregatorPreservesHeader></AggregatorPreservesHeader>
+      <FakeAggregatorPreservesHeader></FakeAggregatorPreservesHeader>
 
       <h1>Aggregator Image Expands to Whole Page</h1>
-      <AggregatorImageToWholePage></AggregatorImageToWholePage>
+      <FakeAggregatorImageToWholePage></FakeAggregatorImageToWholePage>
 
       <h1>Shared Axis</h1>
       <IFramer state={example1State}>
@@ -45,7 +41,7 @@ export function App() {
         <Example
           vtStyle={SharedAxisCSS}
           state={example1State}
-          startPage={<Detail firstPage state={example1State}></Detail>}
+          startPage={<FakeDetail firstPage state={example1State}></FakeDetail>}
           endPage={<FakeAggregator state={example1State}></FakeAggregator>}
         ></Example>
       </IFramer>
@@ -57,7 +53,7 @@ export function App() {
           state={example2State}
           vtReverseStyle={SharedAxisZoomOutCSS}
           startPage={<FakeAggregator firstPage state={example2State}></FakeAggregator>}
-          endPage={<Detail state={example2State}></Detail>}
+          endPage={<FakeDetail state={example2State}></FakeDetail>}
         ></Example>
       </IFramer>
 
@@ -65,7 +61,7 @@ export function App() {
       <IFramer state={example3State}>
         <Example
           state={example3State}
-          startPage={<Detail firstPage state={example3State}></Detail>}
+          startPage={<FakeDetail firstPage state={example3State}></FakeDetail>}
           endPage={<FakeAggregator state={example3State}></FakeAggregator>}
         ></Example>
       </IFramer>
