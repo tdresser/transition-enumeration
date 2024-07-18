@@ -60,9 +60,6 @@ export function App() {
           endPage={<Aggregator state={example3State}></Aggregator>}
         ></Example>
       </IFramer>
-
-      <h1>iFrame Expands to MPA nav (WIP)</h1>
-      <IframeExpands></IframeExpands>
     </>
   );
 }
