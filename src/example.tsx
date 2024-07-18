@@ -38,7 +38,6 @@ function applySelectorToVTNameMap(
   Object.entries(map).forEach(([selector, vtName]) => {
     const el = query(selector);
     el.style.viewTransitionName = vtName;
-    console.log("Setting vt names " + vtName);
   });
 }
 
@@ -56,14 +55,12 @@ function clearVTNames(container: HTMLElement, map?: SelectorToVTNameMap) {
 function doVT(params: doVTParams) {
   // setTimeouts are a hack because we can't synchronously flush all DOM modifications.
   setTimeout(() => {
-    console.log("Doing a VT");
     applySelectorToVTNameMap(
       params.container,
       params.outgoingPageSelectorToVTNameMap
     );
     params.container.style.viewTransitionName = "active-container";
     const styleSheet = params.document.getElementById("vtstyle") ?? fail();
-    console.log(styleSheet);
     styleSheet.innerText = params.vtStyle ?? "";
     // @ts-ignore
     params.document.startViewTransition(() => {

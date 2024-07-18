@@ -18,9 +18,6 @@ It should be easy to:
 
 This has resulted in a somewhat weird architecture, where pages don't know what kinds of transitions they might participate in, and the pages only minimally collaborate with the `Example` component which embeds them.
 
-## TODO
-- Implement a Z axis shared axis transition: https://m2.material.io/design/motion/the-motion-system.html#shared-axis
-
 ## Random Notes
 
 To make images consistent:

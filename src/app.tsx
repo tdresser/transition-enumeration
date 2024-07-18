@@ -13,7 +13,6 @@ import SharedAxisZoomCSS from "./examples/styles/shared_axis_zoom_in.css?inline"
 import SharedAxisZoomOutCSS from "./examples/styles/shared_axis_zoom_out.css?inline";
 
 import { AggregatorImageToWholePage } from "./examples/aggregator_image_to_whole_page";
-import { IframeExpands } from "./examples/iframe_expands";
 import { IFramer } from "./iframer";
 
 export function App() {
