@@ -11,7 +11,7 @@ declare global {
 // Scoped query generator, intended to make assigning things view-transition-names as easy as possible.
 export function generateScopedQuery(container: HTMLElement) {
     return (query: string): HTMLElement => {
-        const results = container.querySelectorAll(query);
+        const results = [...container.querySelectorAll(query)].filter(x => x.checkVisibility());
         if (results.length != 1) {
             console.log(container);
             throw new Error(`Container contains ${results.length} matches to "${query}, required 1."`)

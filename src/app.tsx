@@ -15,12 +15,15 @@ import SharedAxisZoomOutCSS from "./examples/styles/shared_axis_zoom_out.css?inl
 import { FakeAggregatorImageToWholePage } from "./examples/fake_aggregator_image_to_whole_page";
 import { IFramer } from "./iframer";
 import { AggregatorImageToWholePage } from "./examples/aggregator_image_to_whole_page";
+import { PassThrough } from "./pages/passThrough";
 
 export function App() {
   // TODO: managing these state objects is annoying. Is there a better way?
   const example1State = new ExampleState(3);
   const example2State = new ExampleState(3);
   const example3State = new ExampleState(3);
+  const articleSourceState = new ExampleState();
+
 
   return (
     <>
@@ -28,6 +31,20 @@ export function App() {
       <p>Click one of the three rows with images.</p>
       <AggregatorImageToWholePage></AggregatorImageToWholePage>
 
+      <h1>Shared Axis Zoom - from Article to Source and Back</h1>
+      <IFramer state={articleSourceState}>
+        <Example
+          vtStyle={SharedAxisZoomCSS}
+          state={articleSourceState}
+          vtReverseStyle={SharedAxisZoomOutCSS}
+          startPage={<PassThrough firstPage state={articleSourceState}>
+            <img src="public/images/in_out/article_no_omnibox.png"></img>
+          </PassThrough>}
+          endPage={<PassThrough state={articleSourceState}>
+            <img src="public/images/in_out/source_no_omnibox.png"></img>
+          </PassThrough>}
+        ></Example>
+      </IFramer>
 
       <h1>Aggregator Image Expands to Header</h1>
       <FakeAggregatorPreservesHeader></FakeAggregatorPreservesHeader>

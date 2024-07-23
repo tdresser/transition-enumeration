@@ -119,8 +119,9 @@ export function Example(props: ExampleProps) {
 
   return (
     <>
-      <div ref={container} class="container">
-        {currentPage}
+      <div ref={container} class="container" style={{}}>
+        <div style={props.startPage != currentPage ? { display: "none" } : {}}>{props.startPage}</div>
+        <div style={props.endPage != currentPage ? { display: "none" } : {}}>{props.endPage}</div>
       </div>
     </>
   );

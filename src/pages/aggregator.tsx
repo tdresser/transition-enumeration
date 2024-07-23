@@ -26,17 +26,17 @@ export function Aggregator(props: AggregatorProps) {
         <>
             <div class="page" style={{ height: "100%" }}>
                 <img src="images/real/aggregator_no_omnibox.png" style={{ height: "100%", aspectRatio: "auto" }}></img>
-                <div style={{ top: "340px", height: "109px" }}
+                <div style={{ top: "320px", height: "109px" }}
                     class={"link_overlay " + (linkIndex == 1 ? "active" : "")}
                     onClick={onClick(1)}>
                     <div class="link_overlay_inner"></div>
                 </div>
-                <div style={{ top: "449px", height: "109px" }}
+                <div style={{ top: "429px", height: "109px" }}
                     class={"link_overlay " + (linkIndex == 2 ? "active" : "")}
                     onClick={onClick(2)}>
                     <div class="link_overlay_inner"></div>
                 </div>
-                <div style={{ top: "558px", height: "135px" }}
+                <div style={{ top: "538px", height: "135px" }}
                     class={"link_overlay " + (linkIndex == 3 ? "active" : "")}
                     onClick={onClick(3)}>
                     <div class="link_overlay_inner"></div>

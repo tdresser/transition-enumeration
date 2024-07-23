@@ -1,6 +1,6 @@
 import { ExampleState } from '../example_state';
 import { REAL_PAGES } from './header_images';
-import { useCallback, useMemo } from 'preact/hooks';
+import { useCallback, useMemo, useState } from 'preact/hooks';
 
 interface DetailProps {
     state: ExampleState
@@ -8,13 +8,19 @@ interface DetailProps {
 }
 
 export function Detail(props: DetailProps) {
-    const image = useMemo(() => {
-        const index = props.state.linkIndex;
-        if (index == null) {
-            return;
-        }
-        return REAL_PAGES[index % REAL_PAGES.length]
-    }, [props.state.linkIndex])
+    let [image, setImage] = useState<string | null>(null);
+
+    console.log("Detail page useMemo with link index " + props.state.linkIndex)
+
+    useMemo(() => {
+        props.state.listenToActivation((state) => {
+            if (state.linkIndex == undefined) {
+                setImage(null);
+                return;
+            }
+            setImage(REAL_PAGES[state.linkIndex % REAL_PAGES.length])
+        })
+    }, []);
 
     const onClick = useCallback(() => {
         if (props.firstPage) {
