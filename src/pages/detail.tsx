@@ -1,5 +1,5 @@
 import { ExampleState } from '../example_state';
-import { REAL_PAGES } from './header_images';
+import { AGGREGATED_PAGE_IMAGES } from './aggregated_page_images';
 import { useCallback, useMemo, useState } from 'preact/hooks';
 
 interface DetailProps {
@@ -18,7 +18,7 @@ export function Detail(props: DetailProps) {
                 setImage(null);
                 return;
             }
-            setImage(REAL_PAGES[state.linkIndex % REAL_PAGES.length])
+            setImage(AGGREGATED_PAGE_IMAGES[state.linkIndex % AGGREGATED_PAGE_IMAGES.length])
         })
     }, []);
 
@@ -33,7 +33,7 @@ export function Detail(props: DetailProps) {
     return (
         <>
             <div class="page" style={{ height: "100%" }} onClick={onClick}>
-                <img src={image} style={{ width: "100%", height: "100%" }} />
+                <img src={image ? image : ""} style={{ width: "100%", height: "100%" }} />
             </div>
         </>
     )
