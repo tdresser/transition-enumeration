@@ -8,8 +8,8 @@ export function AggregatorImageToWholePage() {
     const example1State = new ExampleState();
 
     return <>
-        <IFramer height="800px" state={example1State}>
-            <Example height="800px"
+        <IFramer style={{ height: "650px", width: "340px" }} state={example1State}>
+            <Example
                 startPageSelectorToVTNameMap={{
                     ".link_overlay.active div.link_overlay_inner": "header_whole_expand"
                 }}

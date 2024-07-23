@@ -119,7 +119,7 @@ export function Example(props: ExampleProps) {
 
   return (
     <>
-      <div ref={container} style={props.height ? { height: props.height } : {}} class="container">
+      <div ref={container} class="container">
         {currentPage}
       </div>
     </>

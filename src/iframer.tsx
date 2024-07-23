@@ -9,7 +9,7 @@ import { ExampleState } from "./example_state";
 interface IFramerProps {
   children: JSX.Element | JSX.Element[];
   state: ExampleState
-  height?: string;
+  style?: JSX.CSSProperties;
 }
 
 export function IFramer(props: IFramerProps) {
@@ -38,7 +38,7 @@ export function IFramer(props: IFramerProps) {
 
   return (
     <>
-      <iframe style={props.height ? { height: props.height } : {}} ref={setiframeEl}></iframe>
+      <iframe style={props.style} ref={setiframeEl}></iframe>
     </>
   );
 }

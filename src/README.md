@@ -28,3 +28,9 @@ mogrify -path ./public/images/standardbugs \
         -extent 600x600  \
         ./public/images/bugs/*
 ```
+
+To crop screenshots
+```
+magick 3.png -crop 1080x2208+0+160 3_trim_ui.png
+magick 3.png -crop 1080x2065+0+291 3_no_omnibox.png
+```

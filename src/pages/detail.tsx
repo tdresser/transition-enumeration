@@ -26,8 +26,8 @@ export function Detail(props: DetailProps) {
 
     return (
         <>
-            <div class="page" onClick={onClick}>
-                <img class="header" src={image} style={{ width: "100%", height: "100%" }} />
+            <div class="page" style={{ height: "100%" }} onClick={onClick}>
+                <img src={image} style={{ width: "100%", height: "100%" }} />
             </div>
         </>
     )
