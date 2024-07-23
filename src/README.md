@@ -22,11 +22,11 @@ This has resulted in a somewhat weird architecture, where pages don't know what 
 
 To make images consistent:
 ```
-mogrify -path ./public/images/standardbugs \
+mogrify -path $OUTPATH \
         -resize 600x600^ \
         -gravity Center  \
         -extent 600x600  \
-        ./public/images/bugs/*
+        $PATH/*
 ```
 
 To crop screenshots

@@ -32,10 +32,10 @@ export function App() {
         <Example
           state={crossFadeState}
           startPage={<PassThrough firstPage state={crossFadeState}>
-            <img src="public/images/in_out/article_no_omnibox.png"></img>
+            <img src="images/in_out/article_no_omnibox.png"></img>
           </PassThrough>}
           endPage={<PassThrough state={crossFadeState}>
-            <img src="public/images/in_out/source_no_omnibox.png"></img>
+            <img src="images/in_out/source_no_omnibox.png"></img>
           </PassThrough>}
         ></Example>
       </IFramer>
@@ -47,10 +47,10 @@ export function App() {
           state={articleSourceState}
           vtReverseStyle={SharedAxisZoomOutCSS}
           startPage={<PassThrough firstPage state={articleSourceState}>
-            <img src="public/images/in_out/article_no_omnibox.png"></img>
+            <img src="images/in_out/article_no_omnibox.png"></img>
           </PassThrough>}
           endPage={<PassThrough state={articleSourceState}>
-            <img src="public/images/in_out/source_no_omnibox.png"></img>
+            <img src="images/in_out/source_no_omnibox.png"></img>
           </PassThrough>}
         ></Example>
       </IFramer>
@@ -64,10 +64,10 @@ export function App() {
           vtReverseStyle={SharedAxisRightCSS}
           state={nextPreviousState}
           startPage={<PassThrough firstPage state={nextPreviousState}>
-            <img src="public/images/in_out/article_no_omnibox.png"></img>
+            <img src="images/in_out/article_no_omnibox.png"></img>
           </PassThrough>}
           endPage={<PassThrough state={nextPreviousState}>
-            <img src="public/images/in_out/source_no_omnibox.png"></img>
+            <img src="images/in_out/source_no_omnibox.png"></img>
           </PassThrough>}
         ></Example>
       </IFramer>
