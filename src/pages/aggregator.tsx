@@ -14,7 +14,7 @@ export function Aggregator(props: AggregatorProps) {
         return () => {
             console.log("Clicked " + index)
             if (props.firstPage) {
-                props.state.activate(index);
+                props.state.activate(index - 1);
                 setLinkIndex(index);
             } else {
                 props.state.reset();
