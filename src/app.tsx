@@ -11,7 +11,7 @@ import SharedAxisZoomCSS from "./examples/styles/shared_axis_zoom_in.css?inline"
 import SharedAxisZoomOutCSS from "./examples/styles/shared_axis_zoom_out.css?inline";
 
 import { IFramer } from "./iframer";
-import { AggregatorImageToWholePage } from "./examples/aggregator_image_to_whole_page";
+import { AggregatorContainerTransform } from "./examples/aggregator_container_transform";
 import { PassThrough } from "./pages/passThrough";
 
 export function App() {
@@ -23,9 +23,27 @@ export function App() {
 
   return (
     <>
-      <h1>Container Transform</h1>
+      <h1>Container Transform: Source Root to Destination Root.</h1>
       <p>Click one of the three rows with images.</p>
-      <AggregatorImageToWholePage></AggregatorImageToWholePage>
+      <AggregatorContainerTransform
+        sourceSelector=".link_overlay.active .empty_target"
+        destinationSelector=".page"></AggregatorContainerTransform>
+
+      <h1>Container Transform: Source Element to Destination Root.</h1>
+      <AggregatorContainerTransform
+        sourceSelector=".link_overlay.active .link_overlay_inner"
+        destinationSelector=".page"></AggregatorContainerTransform>
+
+      <h1>Container Transform: Source Element to Destination Root.</h1>
+      <p>With target location</p>
+      <AggregatorContainerTransform
+        sourceSelector=".link_overlay.active .link_overlay_inner"
+        destinationSelector=".empty_target"></AggregatorContainerTransform>
+
+      <h1>Container Transform: Source Element to Destination Header.</h1>
+      <AggregatorContainerTransform
+        sourceSelector=".link_overlay.active .link_overlay_inner"
+        destinationSelector=".detail_header"></AggregatorContainerTransform>
 
       <h1>Cross Fade: could be full page container transform</h1>
       <IFramer state={crossFadeState}>
@@ -56,7 +74,7 @@ export function App() {
       </IFramer>
 
 
-      <h1>Shared Axis - TODO: get a better example.</h1>
+      <h1>Shared Axis Slide.</h1>
       <IFramer state={nextPreviousState}>
         {/* https://m2.material.io/design/motion/the-motion-system.html#shared-axis */}
         <Example

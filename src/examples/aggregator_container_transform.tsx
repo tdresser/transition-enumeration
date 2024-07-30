@@ -4,17 +4,22 @@ import { IFramer } from "../iframer";
 import { Aggregator } from "../pages/aggregator";
 import { Detail } from "../pages/detail";
 
-export function AggregatorImageToWholePage() {
+interface AggregatorImageToWholePageProps {
+    sourceSelector: string,
+    destinationSelector: string
+}
+
+export function AggregatorContainerTransform(props: AggregatorImageToWholePageProps) {
     const example1State = new ExampleState();
 
     return <>
         <IFramer style={{ height: "650px", width: "340px" }} state={example1State}>
             <Example
                 startPageSelectorToVTNameMap={{
-                    ".link_overlay.active div.link_overlay_inner": "header_whole_expand"
+                    [props.sourceSelector]: "header_whole_expand"
                 }}
                 endPageSelectorToVTNameMap={{
-                    ".page": "header_whole_expand"
+                    [props.destinationSelector]: "header_whole_expand"
                 }}
                 state={example1State}
                 startPage={
@@ -24,6 +29,6 @@ export function AggregatorImageToWholePage() {
                     <Detail state={example1State}></Detail>
                 }>
             </Example >
-        </IFramer>
+        </IFramer >
     </>
 }

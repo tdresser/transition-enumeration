@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'preact/hooks';
 import { ExampleState } from '../example_state';
+import { AGGREGATOR_IMAGES, DISPLAY_RATIO } from './aggregated_page_images';
 
 interface AggregatorProps {
     state: ExampleState
@@ -14,7 +15,7 @@ export function Aggregator(props: AggregatorProps) {
         return () => {
             console.log("Clicked " + index)
             if (props.firstPage) {
-                props.state.activate(index - 1);
+                props.state.activate(index);
                 setLinkIndex(index);
             } else {
                 props.state.reset();
@@ -22,25 +23,46 @@ export function Aggregator(props: AggregatorProps) {
         }
     }, [])
 
+    const getHeaderImage = useCallback((index: number) => {
+        let imageData = AGGREGATOR_IMAGES[index];
+        return <>
+            <div style={{
+                left: imageData.sourceHeaderPosition.x * DISPLAY_RATIO + "px",
+                top: (imageData.sourceHeaderPosition.y - imageData.sourceRowPosition.y) * DISPLAY_RATIO + "px",
+                width: imageData.sourceHeaderPosition.width * DISPLAY_RATIO + "px",
+                height: imageData.sourceHeaderPosition.height * DISPLAY_RATIO + "px",
+                position: "absolute",
+            }}>
+                <div class="empty_target" style={{ inset: "0", position: "absolute" }} ></div>
+                <div class="header_coverer" style={{ inset: "0", position: "absolute", backgroundColor: "#0f1113" }} ></div>
+                <img class="link_overlay_inner" style={{ inset: "0", position: "absolute" }}
+                    src={imageData.sourceHeaderImage}></img >
+            </div >
+        </>
+    }, []);
+
+    const getRow = useCallback((index: number) => {
+        let imageData = AGGREGATOR_IMAGES[index];
+        console.log(linkIndex);
+        return <>
+            <div style={{
+                top: imageData.sourceRowPosition.y * DISPLAY_RATIO,
+                height: imageData.sourceRowPosition.height * DISPLAY_RATIO
+            }}
+                class={"link_overlay " + (linkIndex == index ? "active" : "")}
+                onClick={onClick(index)}>
+                {getHeaderImage(index)}
+            </div>
+        </>
+    }, [linkIndex]);
+
     return (
         <>
             <div class="page" style={{ height: "100%" }}>
                 <img src="images/real/aggregator_no_omnibox.png" style={{ height: "100%", aspectRatio: "auto" }}></img>
-                <div style={{ top: "320px", height: "109px" }}
-                    class={"link_overlay " + (linkIndex == 1 ? "active" : "")}
-                    onClick={onClick(1)}>
-                    <div class="link_overlay_inner"></div>
-                </div>
-                <div style={{ top: "429px", height: "109px" }}
-                    class={"link_overlay " + (linkIndex == 2 ? "active" : "")}
-                    onClick={onClick(2)}>
-                    <div class="link_overlay_inner"></div>
-                </div>
-                <div style={{ top: "538px", height: "135px" }}
-                    class={"link_overlay " + (linkIndex == 3 ? "active" : "")}
-                    onClick={onClick(3)}>
-                    <div class="link_overlay_inner"></div>
-                </div>
+                {getRow(0)}
+                {getRow(1)}
+                {getRow(2)}
             </div>
         </>
     )

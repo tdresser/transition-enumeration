@@ -61,11 +61,3 @@ p {
   left: 0;
   width: 100%;
 }
-
-.link_overlay_inner {
-  height: 100%;
-  width: 10%;
-  /* TODO: buzzing. */
-  right: 10px;
-  position: absolute;
-}
