@@ -13,7 +13,6 @@ export function Aggregator(props: AggregatorProps) {
 
     const onClick = useCallback((index: number) => {
         return () => {
-            console.log("Clicked " + index)
             if (props.firstPage) {
                 props.state.activate(index);
                 setLinkIndex(index);
@@ -43,7 +42,6 @@ export function Aggregator(props: AggregatorProps) {
 
     const getRow = useCallback((index: number) => {
         let imageData = AGGREGATOR_IMAGES[index];
-        console.log(linkIndex);
         return <>
             <div style={{
                 top: imageData.sourceRowPosition.y * DISPLAY_RATIO,

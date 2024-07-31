@@ -13,6 +13,7 @@ import SharedAxisZoomOutCSS from "./examples/styles/shared_axis_zoom_out.css?inl
 import { IFramer } from "./iframer";
 import { AggregatorContainerTransform } from "./examples/aggregator_container_transform";
 import { PassThrough } from "./pages/passThrough";
+import { useState } from "preact/hooks";
 
 export function App() {
   // TODO: managing these state objects is annoying. Is there a better way?
@@ -20,16 +21,38 @@ export function App() {
   const crossFadeState = new ExampleState();
   const nextPreviousState = new ExampleState(3);
 
+  let [slowMotion, setSlowMotion] = useState(false);
+
+  const toggleSlowMotion = () => {
+    const documentElementsForFrames = [...document.querySelectorAll("iframe")].map(x => x.contentWindow?.document.documentElement);
+
+    function setAnimationScaleForAll(v: string) {
+      documentElementsForFrames.forEach(document => {
+        document?.style.setProperty('--animation-scale', v);
+      })
+    }
+
+    slowMotion = slowMotion == false;
+    setSlowMotion(slowMotion);
+    setAnimationScaleForAll(slowMotion ? "10" : "1");
+    console.log(document.documentElement.style.getPropertyValue('--animation-scale'));
+  };
 
   return (
     <>
-      <h1>Container Transform: Source Root to Destination Root.</h1>
+      <label style={{ position: "fixed", right: "20px", top: "10px", display: "block" }}>
+        <input name="terms" type="checkbox" role="switch" onInput={toggleSlowMotion} />
+        Slow motion
+      </label>
+
+      <h1> Container Transform:Source Root to Destination Root.</h1 >
       <p>Click one of the three rows with images.</p>
       <AggregatorContainerTransform
         sourceSelector=".link_overlay.active .empty_target"
         destinationSelector=".page"></AggregatorContainerTransform>
 
       <h1>Container Transform: Source Element to Destination Root.</h1>
+      <p>No known target location</p>
       <AggregatorContainerTransform
         sourceSelector=".link_overlay.active .link_overlay_inner"
         destinationSelector=".page"></AggregatorContainerTransform>

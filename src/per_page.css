@@ -3,6 +3,22 @@
   padding: 0;
 }
 
+html {
+  --animation-scale: 1;
+}
+
+::view-transition-group(*) {
+  animation-duration: calc(var(--animation-scale) * 250ms);
+}
+
+::view-transition-new(*) {
+  animation-duration: calc(var(--animation-scale) * 250ms);
+}
+
+::view-transition-old(*) {
+  animation-duration: calc(var(--animation-scale) * 250ms);
+}
+
 html,
 body {
   width: 100%;
