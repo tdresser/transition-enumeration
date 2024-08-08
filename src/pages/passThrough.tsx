@@ -10,12 +10,9 @@ interface PassThroughProps {
 
 export function PassThrough(props: PassThroughProps) {
     const onClick = useCallback(() => {
-        console.log("First page? " + props.firstPage)
         if (props.firstPage) {
-            console.log("activate");
             props.state.activate()
         } else {
-            console.log("reset");
             props.state.reset();
         }
     }, [])

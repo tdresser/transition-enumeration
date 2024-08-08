@@ -54,17 +54,20 @@ function clearVTNames(container: HTMLElement, map?: SelectorToVTNameMap) {
 }
 
 function doVT(params: doVTParams) {
-  // setTimeouts are a hack because we can't synchronously flush all DOM modifications.
-  setTimeout(() => {
+  const document = params.document;
+  const window = document.defaultView ?? fail();
+
+  // rafs are a hack because we can't explicitly wait for render.
+  window.requestAnimationFrame(() => {
     applySelectorToVTNameMap(
       params.container,
       params.outgoingPageSelectorToVTNameMap
     );
     params.container.style.viewTransitionName = "active-container";
-    const styleSheet = params.document.getElementById("vtstyle") ?? fail();
+    const styleSheet = document.getElementById("vtstyle") ?? fail();
     styleSheet.innerText = params.vtStyle ?? "";
     // @ts-ignore
-    params.document.startViewTransition(() => {
+    const vt = params.document.startViewTransition(() => {
       params.setCurrentPage(params.destination);
       return new Promise<void>((resolve, _) => {
         window.setTimeout(() => {
@@ -73,17 +76,17 @@ function doVT(params: doVTParams) {
             params.incomingPageSelectorToVTNameMap
           );
           resolve();
-          window.setTimeout(() => {
-            clearVTNames(
-              params.container,
-              params.incomingPageSelectorToVTNameMap
-            );
-            params.container.style.viewTransitionName = "";
-          }, 0);
         }, 0);
       });
     });
-  }, 0);
+    vt.finished.then(() => {
+      clearVTNames(
+        params.container,
+        params.incomingPageSelectorToVTNameMap
+      );
+      params.container.style.viewTransitionName = "";
+    })
+  });
 }
 
 export function Example(props: ExampleProps) {
